@@ -44,8 +44,9 @@
     </Compile>
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\CurveModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\LinePoint.cs" />
+    <Compile Include="ViewModels\PointModel.cs" />
     <Compile Include="Views\IMainView.cs" />
   </ItemGroup>
   <ItemGroup>

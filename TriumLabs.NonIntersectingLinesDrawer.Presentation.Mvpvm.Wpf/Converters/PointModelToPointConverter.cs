@@ -5,9 +5,9 @@ using TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.ViewModels;
 namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf.Converters
 {
     /// <summary>
-    /// Converts the XY-coordinates of a line point into a left-top margin.
+    /// Converts the XY-coordinates of a point model into a point.
     /// </summary>
-    public sealed class LinePointToMarginConverter : ConverterBase
+    public sealed class PointModelToPointConverter : ConverterBase
     {
         /// <summary>
         /// Converts a value.
@@ -19,10 +19,10 @@ namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf.Converters
         /// <returns>A converted value. If the method returns null, the valid null value is used.</returns>
         public override object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var linePoint = value as LinePoint;
-            if (linePoint == null) return null;
+            var modelPoint = value as PointModel;
+            if (modelPoint == null) return null;
 
-            return new Thickness(linePoint.X, linePoint.Y, 0, 0);
+            return new Point(modelPoint.X, modelPoint.Y);
         }
     }
 }

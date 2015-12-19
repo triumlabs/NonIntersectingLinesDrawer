@@ -29,6 +29,27 @@
                    TextAlignment="Center"
                    TextWrapping="Wrap"
                    VerticalAlignment="Center"/>
+        
+        <ItemsControl HorizontalAlignment="Stretch"
+                      ItemsSource="{Binding ViewModel.Curves}"
+                      VerticalAlignment="Stretch">
+            
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Path Data="{Binding Converter={converters:CurveModelToPathDataConverter}}"
+                              Stroke="Red" 
+                              StrokeThickness="3"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <ItemsControl HorizontalAlignment="Stretch"
                       ItemsSource="{Binding ViewModel.PinnedPoints}"
@@ -42,16 +63,19 @@
             
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Ellipse Height="{Binding ViewModel.PinnedPointSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                             Margin="{Binding Converter={converters:LinePointToMarginConverter}}"
-                             Width="{Binding ViewModel.PinnedPointSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
-                        <Ellipse.Fill>
+                    <Path>
+                        <Path.Data>
+                            <EllipseGeometry Center="{Binding Converter={converters:PointModelToPointConverter}}"
+                                             RadiusX="{Binding ViewModel.PinnedPointRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                                             RadiusY="{Binding ViewModel.PinnedPointRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                        </Path.Data>
+                        <Path.Fill>
                             <RadialGradientBrush GradientOrigin="0.70,0.35">
                                 <GradientStop Color="White" Offset="0"/>
                                 <GradientStop Color="DarkBlue" Offset="1"/>
                             </RadialGradientBrush>
-                        </Ellipse.Fill>
-                    </Ellipse>
+                        </Path.Fill>
+                    </Path>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

@@ -23,19 +23,20 @@ namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.ViewModels
         /// Gets the list of pinned points.
         /// </summary>
         [IgnoreObservation]
-        public ObservableCollection<LinePoint> PinnedPoints { get; private set; }
+        public ObservableCollection<PointModel> PinnedPoints { get; private set; }
 
         /// <summary>
-        /// Gets or sets the size (diameter) of a pinned point.
+        /// 
         /// </summary>
-        public double PinnedPointSize { get; set; }
+        public ObservableCollection<CurveModel> Curves { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
         /// </summary>
         public MainViewModel()
         {
-            PinnedPoints = new ObservableCollection<LinePoint>();
+            PinnedPoints = new ObservableCollection<PointModel>();
+            Curves = new ObservableCollection<CurveModel>();
         }
     }
 }

@@ -6,8 +6,8 @@
     <dd:DesignView.ViewModel>
         <viewmodels:MainViewModel ViewTitle="Non-intersecting Lines Drawer" UsageText="To draw a non-intersecting, continuous line, select the start and end points">
             <viewmodels:MainViewModel.PinnedPoints>
-                <viewmodels:LinePoint X="20" Y="10"/>
-                <viewmodels:LinePoint X="50" Y="50"/>
+                <viewmodels:PointModel X="20" Y="10" Radius="15"/>
+                <viewmodels:PointModel X="50" Y="50" Radius="15"/>
             </viewmodels:MainViewModel.PinnedPoints>
         </viewmodels:MainViewModel>
     </dd:DesignView.ViewModel>
