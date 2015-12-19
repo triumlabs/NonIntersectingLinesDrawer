@@ -66,8 +66,8 @@
                     <Path>
                         <Path.Data>
                             <EllipseGeometry Center="{Binding Converter={converters:PointModelToPointConverter}}"
-                                             RadiusX="{Binding ViewModel.PinnedPointRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
-                                             RadiusY="{Binding ViewModel.PinnedPointRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                                             RadiusX="{Binding Radius}"
+                                             RadiusY="{Binding Radius}"/>
                         </Path.Data>
                         <Path.Fill>
                             <RadialGradientBrush GradientOrigin="0.70,0.35">

@@ -26,7 +26,7 @@ namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.ViewModels
         public ObservableCollection<PointModel> PinnedPoints { get; private set; }
 
         /// <summary>
-        /// 
+        /// Gets the list of curves.
         /// </summary>
         public ObservableCollection<CurveModel> Curves { get; private set; }
 
