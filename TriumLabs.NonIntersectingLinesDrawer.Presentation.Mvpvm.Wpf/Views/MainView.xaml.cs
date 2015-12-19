@@ -1,4 +1,5 @@
-﻿using TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Views;
+﻿using System.Windows.Input;
+using TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Views;
 
 namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf.Views
 {
@@ -13,6 +14,12 @@ namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf.Views
         public MainView()
         {
             InitializeComponent();
+        }
+
+        private void HandleEventDrawingBoardMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            var position = e.GetPosition(drawingBoard);
+            Presenter.HandleCommandPinPoint(position.X, position.Y);
         }
     }
 }

@@ -51,6 +51,8 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Converters\ConverterBase.cs" />
+    <Compile Include="Converters\LinePointToMarginConverter.cs" />
     <Compile Include="DesignData\DesignView.cs" />
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>

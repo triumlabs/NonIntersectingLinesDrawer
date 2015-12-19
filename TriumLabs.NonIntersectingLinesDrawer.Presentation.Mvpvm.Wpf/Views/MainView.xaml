@@ -3,6 +3,7 @@
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         
+                     xmlns:converters="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf.Converters"
                      xmlns:presenters="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Presenters;assembly=TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm"
                      xmlns:viewmodels="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.ViewModels;assembly=TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm"
                      xmlns:core.wpf="clr-namespace:TriumLabs.Core.Presentation.Mvpvm.Wpf;assembly=TriumLabs.Core.Presentation.Mvpvm.Wpf"
@@ -16,14 +17,44 @@
                      Height="600" Width="600"
                      Title="{Binding ViewModel.ViewTitle}"
                      WindowStartupLocation="CenterScreen">
-    <Grid>
-        <TextBlock 
-            HorizontalAlignment="Center"
-            FontSize="32"
-            Opacity="0.2"
-            Text="{Binding ViewModel.UsageText}"
-            TextAlignment="Center"
-            TextWrapping="Wrap"
-            VerticalAlignment="Center"/>
+    
+    <Grid x:Name="drawingBoard" 
+          Background="White"
+          MouseUp="HandleEventDrawingBoardMouseUp">
+        
+        <TextBlock HorizontalAlignment="Center"
+                   FontSize="32"
+                   Opacity="0.2"
+                   Text="{Binding ViewModel.UsageText}"
+                   TextAlignment="Center"
+                   TextWrapping="Wrap"
+                   VerticalAlignment="Center"/>
+
+        <ItemsControl HorizontalAlignment="Stretch"
+                      ItemsSource="{Binding ViewModel.PinnedPoints}"
+                      VerticalAlignment="Stretch">
+            
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Ellipse Height="{Binding ViewModel.PinnedPointSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
+                             Margin="{Binding Converter={converters:LinePointToMarginConverter}}"
+                             Width="{Binding ViewModel.PinnedPointSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                        <Ellipse.Fill>
+                            <RadialGradientBrush GradientOrigin="0.70,0.35">
+                                <GradientStop Color="White" Offset="0"/>
+                                <GradientStop Color="DarkBlue" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        
     </Grid>
 </core.wpf:WindowView>
