@@ -1,0 +1,29 @@
+﻿<core.wpf:WindowView x:Class="TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf.Views.MainView"
+                     x:TypeArguments="presenters:MainPresenter,viewmodels:MainViewModel"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+                     xmlns:presenters="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Presenters;assembly=TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm"
+                     xmlns:viewmodels="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.ViewModels;assembly=TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm"
+                     xmlns:core.wpf="clr-namespace:TriumLabs.Core.Presentation.Mvpvm.Wpf;assembly=TriumLabs.Core.Presentation.Mvpvm.Wpf"
+                     
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                     mc:Ignorable="d" 
+                     d:DataContext="{d:DesignData Source=/DesignData/MainDesignView.xaml}"
+                     d:DesignHeight="300" d:DesignWidth="500"
+
+                     Height="600" Width="600"
+                     Title="{Binding ViewModel.ViewTitle}"
+                     WindowStartupLocation="CenterScreen">
+    <Grid>
+        <TextBlock 
+            HorizontalAlignment="Center"
+            FontSize="32"
+            Opacity="0.2"
+            Text="{Binding ViewModel.UsageText}"
+            TextAlignment="Center"
+            TextWrapping="Wrap"
+            VerticalAlignment="Center"/>
+    </Grid>
+</core.wpf:WindowView>

@@ -1,0 +1,10 @@
+﻿<dd:DesignView xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:sys="clr-namespace:System;assembly=mscorlib"
+               xmlns:dd="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf.DesignData;assembly=TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf"
+               xmlns:presenters="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Presenters;assembly=TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm"
+               xmlns:viewmodels="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.ViewModels;assembly=TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm">
+    <dd:DesignView.ViewModel>
+        <viewmodels:MainViewModel ViewTitle="Non-intersecting Lines Drawer" UsageText="To draw a non-intersecting, continuous line, select the start and end points">
+        </viewmodels:MainViewModel>
+    </dd:DesignView.ViewModel>
+</dd:DesignView>
