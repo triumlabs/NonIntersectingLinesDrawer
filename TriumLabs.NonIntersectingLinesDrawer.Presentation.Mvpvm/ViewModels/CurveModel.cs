@@ -28,6 +28,11 @@ namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.ViewModels
         public ObservableCollection<PointModel> Points { get; private set; }
 
         /// <summary>
+        /// Indicates whether the given curve intersects at least one other curve.
+        /// </summary>
+        public bool IsIntersect { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CurveModel"/> class.
         /// </summary>
         public CurveModel()

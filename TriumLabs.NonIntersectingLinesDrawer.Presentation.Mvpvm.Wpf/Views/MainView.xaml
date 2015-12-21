@@ -18,67 +18,76 @@
                      Title="{Binding ViewModel.ViewTitle}"
                      WindowStartupLocation="CenterScreen">
     
-    <Grid x:Name="drawingBoard" 
-          Background="White"
-          MouseUp="HandleEventDrawingBoardMouseUp">
+    <DockPanel LastChildFill="True">
         
-        <TextBlock HorizontalAlignment="Center"
-                   FontSize="32"
-                   Opacity="0.2"
-                   Text="{Binding ViewModel.UsageText}"
-                   TextAlignment="Center"
-                   TextWrapping="Wrap"
-                   VerticalAlignment="Center"/>
+        <Grid DockPanel.Dock="Bottom">
+            <Button Content="{Binding ViewModel.ClearCommandText}"
+                    Click="HandleEventClearButtonClick"
+                    Margin="5"/>
+        </Grid>
+    
+        <Grid x:Name="drawingBoard" 
+              Background="White"
+              MouseUp="HandleEventDrawingBoardMouseUp">
         
-        <ItemsControl HorizontalAlignment="Stretch"
-                      ItemsSource="{Binding ViewModel.Curves}"
-                      VerticalAlignment="Stretch">
+            <TextBlock HorizontalAlignment="Center"
+                       FontSize="32"
+                       Opacity="0.2"
+                       Text="{Binding ViewModel.UsageText}"
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center"/>
             
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+            <ItemsControl HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding ViewModel.Curves}"
+                          VerticalAlignment="Stretch">
             
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Path Data="{Binding Converter={converters:CurveModelToPathDataConverter}}"
-                              Stroke="Red" 
-                              StrokeThickness="3"/>
-                    </Grid>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Path Data="{Binding Converter={converters:CurveModelToPathDataConverter}}"
+                                  Stroke="{Binding Converter={converters:CurveModelToPathStrokeConverter}}" 
+                                  StrokeThickness="3"/>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-        <ItemsControl HorizontalAlignment="Stretch"
-                      ItemsSource="{Binding ViewModel.PinnedPoints}"
-                      VerticalAlignment="Stretch">
+            <ItemsControl HorizontalAlignment="Stretch"
+                          ItemsSource="{Binding ViewModel.PinnedPoints}"
+                          VerticalAlignment="Stretch">
             
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas IsItemsHost="True"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas IsItemsHost="True"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
             
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Path>
-                        <Path.Data>
-                            <EllipseGeometry Center="{Binding Converter={converters:PointModelToPointConverter}}"
-                                             RadiusX="{Binding Radius}"
-                                             RadiusY="{Binding Radius}"/>
-                        </Path.Data>
-                        <Path.Fill>
-                            <RadialGradientBrush GradientOrigin="0.70,0.35">
-                                <GradientStop Color="White" Offset="0"/>
-                                <GradientStop Color="DarkBlue" Offset="1"/>
-                            </RadialGradientBrush>
-                        </Path.Fill>
-                    </Path>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Path>
+                            <Path.Data>
+                                <EllipseGeometry Center="{Binding Converter={converters:PointModelToPointConverter}}"
+                                                 RadiusX="{Binding Radius}"
+                                                 RadiusY="{Binding Radius}"/>
+                            </Path.Data>
+                            <Path.Fill>
+                                <RadialGradientBrush GradientOrigin="0.70,0.35">
+                                    <GradientStop Color="White" Offset="0"/>
+                                    <GradientStop Color="DarkBlue" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Path.Fill>
+                        </Path>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         
-    </Grid>
+        </Grid>
+    </DockPanel>
 </core.wpf:WindowView>

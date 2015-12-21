@@ -37,6 +37,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
@@ -61,6 +62,10 @@
     <ProjectReference Include="..\TriumLabs.Core\TriumLabs.Core.csproj">
       <Project>{C63ED399-F17A-406D-B0DF-030FF172B36B}</Project>
       <Name>TriumLabs.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TriumLabs.NonIntersectingLinesDrawer.BusinessServices\TriumLabs.NonIntersectingLinesDrawer.BusinessServices.csproj">
+      <Project>{510A4B5A-2A2D-4965-AA72-A426AA18F3A0}</Project>
+      <Name>TriumLabs.NonIntersectingLinesDrawer.BusinessServices</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

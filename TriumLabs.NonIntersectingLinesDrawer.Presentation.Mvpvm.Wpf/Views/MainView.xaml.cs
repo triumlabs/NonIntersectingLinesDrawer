@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Views;
 
 namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf.Views
@@ -14,6 +15,11 @@ namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Wpf.Views
         public MainView()
         {
             InitializeComponent();
+        }
+
+        private void HandleEventClearButtonClick(object sender, RoutedEventArgs e)
+        {
+            Presenter.HandleCommandClearBoard();
         }
 
         private void HandleEventDrawingBoardMouseUp(object sender, MouseButtonEventArgs e)

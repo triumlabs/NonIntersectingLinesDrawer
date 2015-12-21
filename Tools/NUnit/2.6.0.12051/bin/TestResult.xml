@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="D:\Projects\github\TriumLabs\NonIntersectingLinesDrawer\bin\TriumLabs.NonIntersectingLinesDrawer.BusinessServices.Test.dll" total="5" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2015-12-21" time="00:57:35">
+  <environment nunit-version="2.6.0.12051" clr-version="2.0.50727.5485" os-version="Microsoft Windows NT 6.1.7601 Service Pack 1" platform="Win32NT" cwd="d:\Projects\github\TriumLabs\NonIntersectingLinesDrawer\Tools\NUnit\2.6.0.12051\bin" machine-name="GABO" user="Gabi" user-domain="GABO" />
+  <culture-info current-culture="hu-HU" current-uiculture="en-US" />
+  <test-suite type="Assembly" name="D:\Projects\github\TriumLabs\NonIntersectingLinesDrawer\bin\TriumLabs.NonIntersectingLinesDrawer.BusinessServices.Test.dll" executed="True" result="Success" success="True" time="0.576" asserts="0">
+    <results>
+      <test-suite type="Namespace" name="TriumLabs" executed="True" result="Success" success="True" time="0.559" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="NonIntersectingLinesDrawer" executed="True" result="Success" success="True" time="0.558" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="BusinessServices" executed="True" result="Success" success="True" time="0.558" asserts="0">
+                <results>
+                  <test-suite type="Namespace" name="Test" executed="True" result="Success" success="True" time="0.558" asserts="0">
+                    <results>
+                      <test-suite type="TestFixture" name="CurveServiceTest" executed="True" result="Success" success="True" time="0.555" asserts="0">
+                        <results>
+                          <test-case name="TriumLabs.NonIntersectingLinesDrawer.BusinessServices.Test.CurveServiceTest.Test1SegmentCurveWhenThereAreOtherCurves" executed="True" result="Success" success="True" time="0.444" asserts="0" />
+                          <test-case name="TriumLabs.NonIntersectingLinesDrawer.BusinessServices.Test.CurveServiceTest.Test1SegmentCurveWhenThereIsNoOtherCurves" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="TriumLabs.NonIntersectingLinesDrawer.BusinessServices.Test.CurveServiceTest.TestBottom3SegmentsCurveWhenThereIsOneOtherCurve" executed="True" result="Success" success="True" time="0.085" asserts="0" />
+                          <test-case name="TriumLabs.NonIntersectingLinesDrawer.BusinessServices.Test.CurveServiceTest.TestTop3SegmentsCurveWhenThereAreTwoOtherCurves" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                          <test-case name="TriumLabs.NonIntersectingLinesDrawer.BusinessServices.Test.CurveServiceTest.TestTop3SegmentsCurveWhenThereIsOneOtherCurve" executed="True" result="Success" success="True" time="0.001" asserts="0" />
+                        </results>
+                      </test-suite>
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

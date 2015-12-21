@@ -20,6 +20,11 @@ namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.ViewModels
         public string UsageText { get; set; }
 
         /// <summary>
+        /// Gets or sets the text for clear command.
+        /// </summary>
+        public string ClearCommandText { get; set; }
+
+        /// <summary>
         /// Gets the list of pinned points.
         /// </summary>
         [IgnoreObservation]

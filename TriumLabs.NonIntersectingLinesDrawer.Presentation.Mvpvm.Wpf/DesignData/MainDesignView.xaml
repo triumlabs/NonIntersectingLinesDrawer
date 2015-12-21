@@ -4,7 +4,9 @@
                xmlns:presenters="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Presenters;assembly=TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm"
                xmlns:viewmodels="clr-namespace:TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.ViewModels;assembly=TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm">
     <dd:DesignView.ViewModel>
-        <viewmodels:MainViewModel ViewTitle="Non-intersecting Lines Drawer" UsageText="To draw a non-intersecting, continuous line, select the start and end points">
+        <viewmodels:MainViewModel ViewTitle="Non-intersecting Lines Drawer" 
+                                  UsageText="To draw a non-intersecting, continuous line, select the start and end points"
+                                  ClearCommandText="Clear board!">
             <viewmodels:MainViewModel.PinnedPoints>
                 <viewmodels:PointModel X="20" Y="50" Radius="15"/>
                 <viewmodels:PointModel X="50" Y="100" Radius="15"/>
