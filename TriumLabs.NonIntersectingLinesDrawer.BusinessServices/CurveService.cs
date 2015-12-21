@@ -42,7 +42,10 @@ namespace TriumLabs.NonIntersectingLinesDrawer.BusinessServices
             // - 2 points rotated +/- 60 degree from the line for each start and end point of a curve
             // - 2 points on the mid line for each inner points of a curve
             var alternateVectors = curves
-                .SelectMany(curve => curve.Segments.Take(1).Concat(curve.Segments.Last())
+                // Gets 2 points rotated +/- 60 degree from the line for each start and end point of a curve
+                .SelectMany(curve => curve.Segments
+                    .Take(1)
+                    .Concat(curve.Segments.Last())
                     .SelectMany((segment, idx) =>
                     {
                         var segmentVector = segment.EndVector - segment.StartVector;
@@ -64,18 +67,19 @@ namespace TriumLabs.NonIntersectingLinesDrawer.BusinessServices
                                     segment.EndVector + deltaVectorA,
                                     segment.EndVector + deltaVectorB,
                                 };
-                    })
-                    // Gets the 2 points 20px far on mid lane for inner points of the curve
-                    .Concat(curve.Segments
-                        .SelectMany(segmentPrev => curve.Segments
-                            .Skip(1)
-                            .Select(segmentNext => new
+                    }))
+                // Gets the 2 points 20px far on mid lane for inner points of the curve
+                .Concat(curves
+                    .SelectMany(curve => curve.Segments
+                        .Skip(1)
+                        .Select((segment, idx) => new { SegmentPrev = curve.Segments.ElementAt(idx), SegmentNext = segment })
+                        .Select(tuple => new
                             {
-                                SegmentVectorPrev = (segmentPrev.EndVector - segmentPrev.StartVector),
-                                SegmentVectorNext = (segmentNext.EndVector - segmentNext.StartVector),
-                                MidSegmentVector = segmentPrev.EndVector,
+                                SegmentVectorPrev = (tuple.SegmentPrev.EndVector - tuple.SegmentPrev.StartVector),
+                                SegmentVectorNext = (tuple.SegmentNext.EndVector - tuple.SegmentNext.StartVector),
+                                MidSegmentVector = tuple.SegmentPrev.EndVector,
                             })
-                            .SelectMany(tuple =>
+                        .SelectMany(tuple =>
                             {
                                 var midVector = tuple.SegmentVectorPrev.NormalizeTo() - tuple.SegmentVectorNext.NormalizeTo();
                                 var midDeltaVector = midVector.NormalizeTo(20);
@@ -85,8 +89,10 @@ namespace TriumLabs.NonIntersectingLinesDrawer.BusinessServices
                                         tuple.MidSegmentVector + midDeltaVector,
                                         tuple.MidSegmentVector - midDeltaVector,
                                     };
-                            }))))
-                .Concat(vectorA, vectorB);
+                            })))
+                // Adds the 2 given points to the point set
+                .Concat(vectorA, vectorB)
+                .ToArray();
 
             // Creates a bi-directed graph by connecting all alternate points which do not intersect an existing curve
             var lLineSegments = alternateVectors
