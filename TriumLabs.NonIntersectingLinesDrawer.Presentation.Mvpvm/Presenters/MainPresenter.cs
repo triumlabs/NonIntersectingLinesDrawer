@@ -28,6 +28,7 @@ namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Presenters
 
             ViewModel.ViewTitle = "Non-intersecting Lines Drawer v0.1";
             ViewModel.UsageText = "To draw a non-intersecting, continuous line, select the start and end points";
+            ViewModel.ClearCommandText = "Clear board!";
         }
 
         /// <summary>
@@ -48,6 +49,7 @@ namespace TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.Presenters
         {
             ViewModel.PinnedPoints.Add(new PointModel { X = x, Y = y, Radius = DefaultPinnedPointRadius });
 
+            // Calculates a curve when there are 2 new pinned points
             if (ViewModel.PinnedPoints.Count > 0 && ViewModel.PinnedPoints.Count % 2 == 0)
             {
                 var modelPointA = ViewModel.PinnedPoints[ViewModel.PinnedPoints.Count - 2];

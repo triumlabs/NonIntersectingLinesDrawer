@@ -105,6 +105,10 @@
       <Project>{C63ED399-F17A-406D-B0DF-030FF172B36B}</Project>
       <Name>TriumLabs.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TriumLabs.NonIntersectingLinesDrawer.BusinessServices\TriumLabs.NonIntersectingLinesDrawer.BusinessServices.csproj">
+      <Project>{510A4B5A-2A2D-4965-AA72-A426AA18F3A0}</Project>
+      <Name>TriumLabs.NonIntersectingLinesDrawer.BusinessServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm\TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm.csproj">
       <Project>{E5AC09CF-759D-472C-AE49-E1DCEDE19202}</Project>
       <Name>TriumLabs.NonIntersectingLinesDrawer.Presentation.Mvpvm</Name>

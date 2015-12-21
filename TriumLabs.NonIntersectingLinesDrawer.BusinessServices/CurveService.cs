@@ -28,150 +28,67 @@ namespace TriumLabs.NonIntersectingLinesDrawer.BusinessServices
                 .ToArray();
             var isIntersecting = curveSegments.Any(lineSegmentCD => DetectLineSegmentsIntersection(lineSegmentAB, lineSegmentCD));
             if (!isIntersecting)
+            {
+                // Curve can be represented as a straight line
                 return new Curve(new[] { lineSegmentAB });
+            }
 
-            var rotationAngle = Math.PI / 3.0;
+            // Curve cannot be represented as straight line as it would intersect at least one other curve
+            // Curve need to be splitted into more, connected line segments
+
+            var rotationAngle = Math.PI / 3.0; // Angle of 60 degrees
+
+            // Defines points 20px far from exisiting curves' edges as
+            // - 2 points rotated +/- 60 degree from the line for each start and end point of a curve
+            // - 2 points on the mid line for each inner points of a curve
             var alternateVectors = curves
-                .SelectMany(curve =>
-                {
-                    return curve.Segments.Take(1).Concat(curve.Segments.Last())
-                        .SelectMany((segment, idx) =>
-                        {
-                            var segmentVector = segment.EndVector - segment.StartVector;
-                            var deltaVector = new Vector(
-                                20.0 * segmentVector.X / segmentVector.Length,
-                                20.0 * segmentVector.Y / segmentVector.Length);
-                            // Rotate a vector, see https://en.wikipedia.org/wiki/Rotation_(mathematics)
-                            var deltaVectorA = new Vector(
-                                deltaVector.X * Math.Cos(rotationAngle) - deltaVector.Y * Math.Sin(rotationAngle),
-                                deltaVector.X * Math.Sin(rotationAngle) + deltaVector.Y * Math.Cos(rotationAngle));
-                            var deltaVectorB = new Vector(
-                                deltaVector.X * Math.Cos(-rotationAngle) - deltaVector.Y * Math.Sin(-rotationAngle),
-                                deltaVector.X * Math.Sin(-rotationAngle) + deltaVector.Y * Math.Cos(-rotationAngle));
+                .SelectMany(curve => curve.Segments.Take(1).Concat(curve.Segments.Last())
+                    .SelectMany((segment, idx) =>
+                    {
+                        var segmentVector = segment.EndVector - segment.StartVector;
+                        var deltaVector = segmentVector.NormalizeTo(20.0);
+                        var deltaVectorA = deltaVector.RotateBy(rotationAngle);
+                        var deltaVectorB = deltaVector.RotateBy(-rotationAngle);
 
-                            if (idx == 0)
-                                return new[] 
-                                    {
-                                        segment.StartVector - deltaVectorA,
-                                        segment.StartVector - deltaVectorB,
-                                    };
-                            else
-                                return new[] 
-                                    {
-                                        segment.EndVector + deltaVectorA,
-                                        segment.EndVector + deltaVectorB,
-                                    };
-                        })
-                        .Concat(curve.Segments
-                            .SelectMany(segmentPrev => curve.Segments
-                                .Skip(1)
-                                .Select(segmentNext => new
+                        // Gets the 20px, rotated points for first point of the curve
+                        if (idx == 0)
+                            return new[] 
                                 {
-                                    SegmentVectorPrev = (segmentPrev.EndVector - segmentPrev.StartVector),
-                                    SegmentVectorNext = (segmentNext.EndVector - segmentNext.StartVector),
-                                    MidSegmentVector = segmentPrev.EndVector,
-                                })
-                                .SelectMany(tuple =>
+                                    segment.StartVector - deltaVectorA,
+                                    segment.StartVector - deltaVectorB,
+                                };
+                        // Gets the 20px, rotated points for last point of the curve
+                        else
+                            return new[] 
                                 {
-                                    var midVector = 
-                                        (tuple.SegmentVectorPrev / tuple.SegmentVectorPrev.Length) - 
-                                        (tuple.SegmentVectorNext / tuple.SegmentVectorNext.Length);
-                                    var midDeltaVector = new Vector(
-                                        20.0 * midVector.X / midVector.Length,
-                                        20.0 * midVector.Y / midVector.Length);
+                                    segment.EndVector + deltaVectorA,
+                                    segment.EndVector + deltaVectorB,
+                                };
+                    })
+                    // Gets the 2 points 20px far on mid lane for inner points of the curve
+                    .Concat(curve.Segments
+                        .SelectMany(segmentPrev => curve.Segments
+                            .Skip(1)
+                            .Select(segmentNext => new
+                            {
+                                SegmentVectorPrev = (segmentPrev.EndVector - segmentPrev.StartVector),
+                                SegmentVectorNext = (segmentNext.EndVector - segmentNext.StartVector),
+                                MidSegmentVector = segmentPrev.EndVector,
+                            })
+                            .SelectMany(tuple =>
+                            {
+                                var midVector = tuple.SegmentVectorPrev.NormalizeTo() - tuple.SegmentVectorNext.NormalizeTo();
+                                var midDeltaVector = midVector.NormalizeTo(20);
 
-                                    return new[] 
-                                        { 
-                                            tuple.MidSegmentVector + midDeltaVector,
-                                            tuple.MidSegmentVector - midDeltaVector,
-                                        };
-                                })));
-                })
+                                return new[] 
+                                    { 
+                                        tuple.MidSegmentVector + midDeltaVector,
+                                        tuple.MidSegmentVector - midDeltaVector,
+                                    };
+                            }))))
                 .Concat(vectorA, vectorB);
 
-            //var alternateVectors = curves
-            //    .SelectMany(curve =>
-            //        {
-            //            var segmentCount = curve.Segments.Count();
-            //            return curve.Segments
-            //                .SelectMany((segment, idx) =>
-            //                    {
-            //                        var vectorSegment = segment.EndVector - segment.StartVector;
-            //                        var vectorDelta = new Vector(
-            //                            20.0 * vectorSegment.X / vectorSegment.Length,
-            //                            20.0 * vectorSegment.Y / vectorSegment.Length);
-
-            //                        if (idx == 0 || idx == segmentCount - 1)
-            //                        {
-            //                            var lVector = new List<Vector>(3);
-
-            //                            var vectorDeltaA = new Vector(
-            //                                vectorDelta.X * Math.Cos(rotationAngle) - vectorDelta.Y * Math.Sin(rotationAngle),
-            //                                vectorDelta.X * Math.Sin(rotationAngle) + vectorDelta.Y * Math.Cos(rotationAngle));
-            //                            var vectorDeltaB = new Vector(
-            //                                vectorDelta.X * Math.Cos(-rotationAngle) - vectorDelta.Y * Math.Sin(-rotationAngle),
-            //                                vectorDelta.X * Math.Sin(-rotationAngle) + vectorDelta.Y * Math.Cos(-rotationAngle));
-
-            //                            if (idx == 0)
-            //                            {
-            //                                lVector.Add(segment.StartVector - vectorDeltaA);
-            //                                lVector.Add(segment.StartVector - vectorDeltaB);
-            //                            }
-            //                            else lVector.Add(segment.StartVector - vectorDelta);
-                                        
-            //                            if (idx == segmentCount - 1)
-            //                            {
-            //                                lVector.Add(segment.EndVector + vectorDeltaA);
-            //                                lVector.Add(segment.EndVector + vectorDeltaB);
-            //                            }
-            //                            else lVector.Add(segment.EndVector + vectorDelta);
-
-            //                            return (IEnumerable<Vector>)lVector;
-            //                        }
-            //                        else
-            //                        {
-            //                            return new[] 
-            //                                {
-            //                                    segment.StartVector - vectorDelta,
-            //                                    segment.EndVector + vectorDelta,
-            //                                };
-            //                        }
-            //                    });
-            //        })
-            //    .Concat(vectorA, vectorB);
-            
-            //var alternateVectors = curveSegments
-            //    .SelectMany(segment =>
-            //        {
-            //            var vectorSegment = segment.EndVector - segment.StartVector;
-            //            var vectorDelta = new Vector(
-            //                20.0 * vectorSegment.X / vectorSegment.Length,
-            //                20.0 * vectorSegment.Y / vectorSegment.Length);
-            //            return new [] 
-            //                {
-            //                    segment.StartVector - vectorDelta,
-            //                    segment.EndVector + vectorDelta,
-            //                };
-            //        })
-            //    .Concat(vectorA, vectorB)
-            //    .ToArray();
-
-            //var alternateVectors = curves
-            //    .SelectMany(curve =>
-            //        curve.Segments
-            //            .Take(1)
-            //            .Select(segment => segment.StartVector)
-            //        .Concat(curve.Segments.Select(segment => segment.EndVector)))
-            //    .SelectMany(vector => new[] 
-            //        {
-            //            new Vector(vector.X - 20, vector.Y),
-            //            new Vector(vector.X, vector.Y - 20),
-            //            new Vector(vector.X + 20, vector.Y),
-            //            new Vector(vector.X, vector.Y + 20),
-            //        })
-            //    .Concat(new [] { vectorA, vectorB })
-            //    .ToArray();
-
+            // Creates a bi-directed graph by connecting all alternate points which do not intersect an existing curve
             var lLineSegments = alternateVectors
                 .SelectMany((vectorStart, idxStart) => alternateVectors
                     .Skip(idxStart + 1)
@@ -187,6 +104,8 @@ namespace TriumLabs.NonIntersectingLinesDrawer.BusinessServices
             var lCurve = new List<Curve>();
             var lCurveFound = new List<Curve>();
 
+            // Finds curves (path) between the given points A and B (breadth-first search)
+            // TODO: replace this to Dijkstra
             while (lLineSegments.Count > 0)
             {
                 var startVectors = lCurve.Count > 0 ?
@@ -199,6 +118,7 @@ namespace TriumLabs.NonIntersectingLinesDrawer.BusinessServices
                     .ToArray();
                 if (segments.Length == 0) break;
 
+                // Removes segments and their backward directions
                 segments.ForEach(segment => lLineSegments.Remove(segment));
                 segments
                     .Select(segment => lLineSegments
@@ -208,6 +128,7 @@ namespace TriumLabs.NonIntersectingLinesDrawer.BusinessServices
                     .Where(segmentBackward => segmentBackward != null)
                     .ForEach(segmentBackward => lLineSegments.Remove(segmentBackward));
 
+                // Extends appropriate curves with the last segment found (tracking path)
                 var curvesExtended = lCurve.Count > 0 ?
                     segments
                         .SelectMany(segment => lCurve
@@ -218,12 +139,15 @@ namespace TriumLabs.NonIntersectingLinesDrawer.BusinessServices
                         .Select(segment => new Curve(new[] { segment }))
                         .ToArray();
 
+                // Stores curves reached end point
                 lCurveFound.AddRange(curvesExtended.Where(curve => curve.Segments.Last().EndVector == vectorB));
 
+                // Defines start points for the next search iteration
                 lCurve.Clear();
                 lCurve.AddRange(curvesExtended.Where(curve => curve.Segments.Last().EndVector != vectorB));
             }
 
+            // Returns the shortest curve/path between points A and B
             return lCurveFound
                 .OrderBy(curve => curve.Length)
                 .FirstOrDefault();
